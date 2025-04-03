@@ -33,7 +33,19 @@ The frontend is built using **vanilla JavaScript**, HTML, and CSS, with a minima
 ## Folder Structure
 
 ```bash 
-/express-quote-api ├── /public # Frontend files (HTML, CSS, JS) │ ├── /styles.css # Styles for the frontend │ ├── /add-quote.html # Page for adding new quotes │ ├── /index.html # Home page for displaying quotes │ ├── /script.js # JavaScript to interact with the API │ ├── /add-quote.js # JavaScript to add new quotes │ └── /favicon.ico # Favicon ├── /data # Contains the pre-populated quotes data │ └── quotes.js # Array of quotes ├── /utils # Utility functions │ └── utils.js # Contains the getRandomElement function ├── server.js # Entry point for the Express server └── README.md # Project documentation
+/express-quote-api 
+├── /public # Frontend files (HTML, CSS, JS) │ 
+    ├── /styles.css # Styles for the frontend │ 
+    ├── /add-quote.html # Page for adding new quotes │ 
+    ├── /index.html # Home page for displaying quotes │ 
+    ├── /script.js # JavaScript to interact with the API │ 
+    ├── /add-quote.js # JavaScript to add new quotes 
+    │ └── /favicon.ico # Favicon ├── /data # Contains the pre-populated quotes data 
+│ └── data.js # Array of quotes 
+├── /utils # Utility functions 
+    │ └── utils.js # Contains the getRandomElement function 
+├── server.js # Entry point for the Express server 
+└── README.md # Project documentation
 ```
 
 
