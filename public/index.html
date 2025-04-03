@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Quote API</title>
+  <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:400,400i,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+<body>
+  <h1>Quote API</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="add-quote.html">Add a New Quote</a>
+  </nav>
+  <h2>Get Quotes</h2>
+  <div class="request-buttons">
+    <div>
+      <!-- this basically is a GET at the URL /api/quotes/random-->
+      <button id="fetch-random">Fetch a Random Quote</button>
+      <!-- this basically is a GET at the URL /api/quotes/-->
+      <button id="fetch-quotes">Fetch all Quotes</button>
+    </div>
+    <div>
+      <input id="author" value="">
+      <!-- this basically is a GET at the URL /api/quotes?person=<text from the input id author-->
+      <button id="fetch-by-author">Fetch by Author</button>
+    </div>
+  </div>
+  <div id="quote-container">
+    
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
