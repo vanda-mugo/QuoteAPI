@@ -64,9 +64,9 @@ app.put('/api/quotes/:id', (req, res, next) => {
 
     const index = quotes.findIndex(quote => quote.id === id);
     if(index !== -1){
-        quotes[index] = {quote, person};
+        quotes[index] = {id, quote, person};
         saveQuotes(quotes);
-        res.send({quote:{quote, person}});
+        res.send({quote:{id,quote, person}});
     }else{
         res.status(404).send(`Quote with id ${id} not found`);
     }
