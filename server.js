@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+const { v4: uuidv4 } = require('uuid'); // this is a library that generates unique ids
+// this is a library that generates unique ids
 
 const { quotes, saveQuotes } = require('./data');// this is an array with prepopulated quotes about technology
 const { getRandomElement } = require('./utils');//this takes an array and returns a random element from the array 
@@ -46,14 +48,46 @@ app.post('/api/quotes', (req, res, next) => {
     // then we return a 400 error
     // and send a message to the client
     if(quote && person){
-       quotes.push({quote, person});
+        const id=  uuidv4();
+       quotes.push({id ,quote, person});
        saveQuotes(quotes);
-       res.send({quote:{quote, person}});
+       res.send({quote:{id,quote, person}});
     }else{
         res.status(400).send(`Failed requires both quote and person fields`);
     }
 
-})
+});
+
+app.put('/api/quotes/:id', (req, res, next) => {
+    const { id } = req.params;
+    const { quote, person } = req.query;
+
+    const index = quotes.findIndex(quote => quote.id === id);
+    if(index !== -1){
+        quotes[index] = {quote, person};
+        saveQuotes(quotes);
+        res.send({quote:{quote, person}});
+    }else{
+        res.status(404).send(`Quote with id ${id} not found`);
+    }
+});
+
+
+app.delete('/api/quotes/:id', (req, res, next) => {
+    const { id } = req.params;
+    const index = quotes.findIndex(quote => quote.id === id);
+    if(index !== -1){
+        quotes.splice(index, 1);
+        saveQuotes(quotes);
+        res.send({message:`Quote with id ${id} deleted`});
+    }else{
+        res.status(404).send(`Quote with id ${id} not found`);
+    }
+});
+// this is the main entry point of the application
+// it listens for incoming requests on the specified port
+// and starts the server
+// the server will listen for incoming requests on port 4001
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
