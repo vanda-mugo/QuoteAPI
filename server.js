@@ -22,6 +22,7 @@ app.get('/api/quotes/random', (req, res, next) => {
     const randomQuote = getRandomElement(quotes);
     const quoteObject = {quote: randomQuote};
     res.send(quoteObject);
+    console.log(`Random quote sent ${randomQuote.quote} by ${randomQuote.person} with id ${randomQuote.id}`);
 });
 
 app.get('/api/quotes', (req, res, next) => {
@@ -31,16 +32,18 @@ app.get('/api/quotes', (req, res, next) => {
         // in this case there is no query params 
         const quotesObject = {quotes};
         res.send(quotesObject);
+        console.log(`All quotes sent`);
         }else{
         // in this case we do have a name 
         returnArr = quotes.filter(quote => quote.person === personName);
         res.send({quotes: returnArr});
+        console.log(`Quotes by ${personName} sent`);
     }
 });
 
 app.post('/api/quotes', (req, res, next) => {
     const { quote , person } = req.query;
-    console.log(`${quote} ${person}`);
+    console.log(`${quote} ${person} quote created`);
     // if both quote and person are present
     // then we push the quote to the quotes array
     // and save the quotes array to the file
@@ -48,7 +51,7 @@ app.post('/api/quotes', (req, res, next) => {
     // then we return a 400 error
     // and send a message to the client
     if(quote && person){
-        const id=  uuidv4();
+       const id=  uuidv4();
        quotes.push({id ,quote, person});
        saveQuotes(quotes);
        res.send({quote:{id,quote, person}});
@@ -67,6 +70,7 @@ app.put('/api/quotes/:id', (req, res, next) => {
         quotes[index] = {id, quote, person};
         saveQuotes(quotes);
         res.send({quote:{id,quote, person}});
+        console.log(`${id} , ${quote} , ${person} quote edited`);
     }else{
         res.status(404).send(`Quote with id ${id} not found`);
     }
@@ -80,6 +84,7 @@ app.delete('/api/quotes/:id', (req, res, next) => {
         quotes.splice(index, 1);
         saveQuotes(quotes);
         res.send({message:`Quote with id ${id} deleted`});
+        console.log(`Quote with id ${id} deleted`);
     }else{
         res.status(404).send(`Quote with id ${id} not found`);
     }
