@@ -1,58 +1,43 @@
-const quotes = [
-  {
-    quote: 'We build our computer (systems) the way we build our cities: over time, without a plan, on top of ruins.',
-    person: 'Ellen Ullman'
-  },
-  {
-    quote: 'The best thing about a boolean is even if you are wrong, you are only off by a bit.',
-    person: 'Anonymous'
-  },
-  {
-    quote: `If it's a good idea, go ahead and do it. It's much easier to apologize than it is to get permission.`,
-    person: 'Grace Hopper'
-  },
-  {
-    quote: 'The city’s central computer told you?  R2D2, you know better than to trust a strange computer!',
-    person: 'C-3PO'
-  },
-  {
-    quote: 'I have always wished for my computer to be as easy to use as my telephone; my wish has come true because I can no longer figure out how to use my telephone.',
-    person: 'Bjarne Stroustrup'
-  },
-  {
-    quote: 'Understand well as I may, my comprehension can only be an infinitesimal fraction of all I want to understand.',
-    person: 'Ada Lovelace'
-  },
-  {
-    quote: 'Java is to JavaScript as ham is to hamster.',
-    person: 'Jeremy Keith'
-  },
-  {
-    quote: `The most dangerous phrase in the language is, "We've always done it this way."`,
-    person: 'Grace Hopper'
-  },
-  {
-    quote: 'As soon as we started programming, we found to our surprise that it wasn’t as easy to get programs right as we had thought.  Debugging had to be discovered.  I can remember the exact instant when I realized that a large part of my life from then on was going to be spent in finding mistakes in my own programs.',
-    person: 'Maurice Wilkes'
-  },
-  {
-    quote: 'Learning to write programs stretches your mind, and helps you think better, creates a way of thinking about things that I think is helpful in all domains.',
-    person: 'Bill Gates'
-  },
-  {
-    quote: 'What one programmer can do in one month, two programmers can do in two months.',
-    person: 'Fred Brooks'
-  },
-  {
-    quote: 'The Internet? Is that thing still around?',
-    person: 'Homer Simpson'
-  },
-  {
-    quote: 'If you tell me precisely what it is a machine cannot do, then I can always make a machine which will do just that.',
-    person: 'Jon von Neumann'
-  },
-];
+const fs = require('fs'); // NOde.js file system module, which allows you to work with the file system on your computer
+const path = require('path'); // Node.js path module, which provides utilities for working with file and directory paths
+const QUOTES_FILE = path.join(__dirname, 'quotes.json'); // Path to the quotes.json file in the same directory as this script
+// __dirname is a Node.js global variable that gives the directory name of the current module
+
+const loadData = () => {
+  // Check if the quotes.json file exists
+  if (fs.existsSync(QUOTES_FILE)) {
+    // If it exists, read and parse the JSON data from the file
+    const data = fs.readFileSync(QUOTES_FILE, 'utf-8'); // Read the file synchronously and decode it as UTF-8
+    // JSON.parse converts the JSON string into a JavaScript object
+    // The data is expected to be an array of quotes
+    // Each quote is an object with a 'quote' and 'person' property
+    return JSON.parse(data);
+  } else {
+    // If it doesn't exist, return an empty array
+    return [];
+  }
+};
+
+/**
+ * 
+ * @param {*} data - The data to save to the quotes.json file
+ * @returns {void}
+ * This function saves the provided data to the quotes.json file.
+ * It first converts the data to a JSON string using JSON.stringify.
+ * Then, it writes the JSON string to the file using fs.writeFileSync.
+ * The file is saved in the same directory as this script.
+ */
+const saveQuotes = (data) => {
+  // Convert the data to a JSON string
+  const jsonData = JSON.stringify(data, null, 2); // The second argument is for pretty-printing the JSON with 2 spaces of indentation
+  // Write the JSON string to the quotes.json file
+  fs.writeFileSync(QUOTES_FILE, jsonData, 'utf-8'); // Write the file synchronously and encode it as UTF-8
+};
+
+let quotes = loadData(); // Load the existing quotes from the file
+
 
 module.exports = {
-  quotes
+  quotes, // Export the loaded quotes
+  saveQuotes, // Export the function to save quotes
 };

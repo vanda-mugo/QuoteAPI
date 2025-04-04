@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const { quotes } = require('./data');// this is an array with prepopulated quotes about technology
+const { quotes, saveQuotes } = require('./data');// this is an array with prepopulated quotes about technology
 const { getRandomElement } = require('./utils');//this takes an array and returns a random element from the array 
 
 const PORT = process.env.PORT || 4001;
@@ -13,7 +13,8 @@ app.use(express.static('public'));
  * http://localhost:4001 your index.html will be served automatically 
  * */ 
 
-
+// Parse incoming JSON
+app.use(express.json());
 
 app.get('/api/quotes/random', (req, res, next) => {
     const randomQuote = getRandomElement(quotes);
@@ -37,8 +38,16 @@ app.get('/api/quotes', (req, res, next) => {
 
 app.post('/api/quotes', (req, res, next) => {
     const { quote , person } = req.query;
+    console.log(`${quote} ${person}`);
+    // if both quote and person are present
+    // then we push the quote to the quotes array
+    // and save the quotes array to the file
+    // if either quote or person is not present
+    // then we return a 400 error
+    // and send a message to the client
     if(quote && person){
        quotes.push({quote, person});
+       saveQuotes(quotes);
        res.send({quote:{quote, person}});
     }else{
         res.status(400).send(`Failed requires both quote and person fields`);
