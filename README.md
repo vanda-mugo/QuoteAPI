@@ -123,11 +123,42 @@ Example response:
 ```bash
 {
   "quote": {
+    "id": "2c082cc7-39d8-4c92-9608-273cd4770e43",
     "quote": "Your quote here",
     "person": "Author name"
   }
 }
 ```
+
+### 5. PUT  /api/quotes/:id
+This endpoint allows the editing of quotes by allowing a quotes content and quotes person to be edited if the id is given which remains the same 
+```bash
+PUT http://localhost:4001/api/quotes/id?quote=new-quote&person=person-name
+```
+example response:
+```bash 
+{
+    "quote": {
+        "id": "2c082cc7-39d8-4c92-9608-273cd4770e43",
+        "quote": "winner gets more than icecream",
+        "person": "person-name"
+    }
+}
+```
+
+### 6. DELETE  /api/quotes/:id
+This endpoint allows the deleting of a quote object provided the quote object id 
+```bash
+DELETE http://localhost:4001/api/quotes/id
+```
+example response:
+```bash 
+{
+    "message": "Quote with id 2c082cc7-39d8-4c92-9608-273cd4770e43 deleted"
+}
+```
+
+
 ## Frontend Details
 
     The frontend is built using vanilla JavaScript, HTML, and CSS.
